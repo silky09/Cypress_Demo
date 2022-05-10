@@ -1,127 +1,83 @@
 /// <reference types="cypress" />
+
+import {LoginPage} from '../Page_Object/LoginPage'
+import {SelectFlight} from '../Page_Object/SelectFlight'
+import {PassengerDetails} from '../Page_Object/PassengerDetailPage'
+import {PaymentDetails} from '../Page_Object/Payment_SignoutPage'
+
+
 describe('Login Test', () => { 
 
-    beforeEach(() => {
+    beforeEach(function(){
         cy.visit('https://travel.agileway.net/login')
-    });    
+        // use fixture to drive login data
+        cy.fixture('example').then(function(data) {
+          this.data = data
+        })
+    }); 
+    
+    const login = new LoginPage;
+    const selectFlight = new SelectFlight;
+    const passengerDetail = new PassengerDetails;
+    const paymentDetails = new PaymentDetails;
 
-    it('Login Test with valid credencials', () => {
+    it('Login Test', function(){
 
-        cy.title().should('eq','Agile Travel')
-        cy.get('#username').type('agileway') // input field
-        cy.get('#password').type('testwise') // input field
-        cy.get('#remember_me') // checkbox
-          .check()
-          .should('be.checked') 
-        cy.get(':nth-child(4) > input') // signin button
-        
-        //validation
-          .should('be.enabled')
-          .and('be.visible')
-          .click()
+        cy.log('Login Test with valid credencials')
+        login.VarifyTitle()
+        login.EnterUserName().type(this.data.systemUserName) 
+        login.EnterPassword().type(this.data.systemPassword) 
+        login.ClickRememberMe()
+        login.ClickSignIn() 
+             
 
         // Test welcome page
-        cy.get('#flash_notice').should('have.text','Signed in!')
-        cy.url().should('include', 'start') // URL validation
-        cy.get('h2').should('contain.text', 'Select Flight') // text validation
         
-        //cy.pause()
-        // select Trip type: One way (radio button)
-        cy.get('[value="oneway"]')
-          .check()
-          .should('be.checked')
-          .and('be.visible')
-          .and('be.enabled')
-        cy.contains('Return')
-           .should('not.be.checked')
-        // From Sydney to New York : Static dropdown
-        cy.get('[name="fromPort"]').select('Sydney').should('be.visible')
-        cy.get('[name="toPort"]').select('New York').should('be.visible') 
+        selectFlight.VarifySelectFlight_page()
+        selectFlight.VarifyHeader_text()
+        
+        selectFlight.SelectOneWayTrip()
+        selectFlight.VarifyReturn_trip()
 
-        // Departing Date and Month: Static dropdown
+        selectFlight.SelectOrigin_Sydney()
+        selectFlight.SelectDestination_NewYork()
+         
+        selectFlight.SelectDeparting_Day()
+        selectFlight.SelectDeparting_Month()
 
-        cy.get('#departDay')
-          .should('be.enabled')  
-          .select('09')
-          .and('be.visible')    
-          
-        cy.get('#departMonth')
-          .should('be.enabled')  
-          .select('December 2021')
-          .and('be.visible') 
-
-    // Time and Airline detail: multi Checkboxes 
-
-    cy.get(':nth-child(2) > th > input').check()
-    cy.get(':nth-child(1) > th > input')
-      .should('not.be.checked')
-    cy.get(':nth-child(3) > th > input')
-      .should('not.be.checked')
-
-    // click continue button
-    
-    cy.get('[type="submit"]')
-      .should('be.enabled')
-      .click()
-
+        selectFlight.SelectTime_8_30()
+        selectFlight.VarifyTime_8_00()
+        selectFlight.VarifyTime_9_00()
+        selectFlight.Click_Continue()
+              
     // Passenger Details
 
-    cy.get('h2').should('contain.text', 'Passenger Details')
-    cy.url().should('contain', 'returnMonth')
+        passengerDetail.Validation_URL()
+        passengerDetail.Validation_header()
+        passengerDetail.EnterFirstName()
+        passengerDetail.EnterLastName()
+        passengerDetail.ClickNext()
     
-    // fName anf lName
-    cy.get('[name="passengerFirstName"]').should('be.enabled')
-       .type('Silk') 
-    cy.get('[name="passengerLastName"]').should('be.enabled').and('be.visible')
-       .type('San')
 
-    // click next buton
-
-    cy.get('[type="submit"]')
-      .should('be.enabled')
-      .click()
+    
     
     // Payment details
-    cy.url().should('include', 'passenger')
-    cy.get('h2').should('contain','Pay by Credit Card')
+   
+         paymentDetails.VarifyPayment_page()
+         paymentDetails.SelectVisa_card()
+         paymentDetails.VarifyMaster_card()
+         paymentDetails.VarifyCardHolder_Name()
+         paymentDetails.EnterCard_number()
+         paymentDetails.SelectExpiry_month()
+         paymentDetails.SelectExpiry_year()
+         paymentDetails.ClickPay_now()
+         paymentDetails.TicketConfirmation()
+         paymentDetails.Sign_off()
+         paymentDetails.ValifySign_offMessage()
 
-    
-        // card type: visa (radio button)
-    cy.get('[value="visa"]')
-      .should('not.be.checked')
-      .and('be.enabled')
-      .click()
-      .and('be.checked')
-    
-      cy.get('[value="master"]')
-      .should('not.be.checked')
-      .and('be.enabled')
-
-    // validation
-
-    cy.get('[name="holder_name"]').should('have.value', 'Silk San')
-
-    cy.get('[name="card_number"]').type('123457890')
-
-    cy.get('[name="expiry_month"]').select('09').should('contain','09')
-    cy.get('[name="expiry_year"]').select('2025').should('contain','2025')
-
-    cy.get('[type="submit"]').click()
     // configure time to 8 sec
-    Cypress.config('defaultCommandTimeout', 8000)
-
-    // Validate confirmation message
-
-    cy.contains('Confirmation').should('contain', 'Confirmation')
-    cy.log('Booking number: 3676')
-
-    // sign off
-    cy.get('#user_nav > a').click()
-
-    // validation signoff message
-
-    cy.get('#flash_notice').should('have.text', 'Signed out!')
-    cy.url().should('include', 'login')
+    //Cypress.config('defaultCommandTimeout', 8000)
+    
     });  
 });
 
