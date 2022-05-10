@@ -21,7 +21,7 @@ describe('Login Test', () => {
     const passengerDetail = new PassengerDetails;
     const paymentDetails = new PaymentDetails;
 
-    it('Login Test', function(){
+    it('Login Test with valid credentials', function(){
 
         cy.log('Login Test with valid credencials')
         login.VarifyTitle()
@@ -58,9 +58,6 @@ describe('Login Test', () => {
         passengerDetail.EnterLastName()
         passengerDetail.ClickNext()
     
-
-    
-    
     // Payment details
    
          paymentDetails.VarifyPayment_page()
@@ -79,6 +76,24 @@ describe('Login Test', () => {
     //Cypress.config('defaultCommandTimeout', 8000)
     
     });  
+
+
+    it('Login test with invalid username and valid password', function(){
+            login.EnterUserName().type(this.data.invalidUsername) 
+            login.EnterPassword().type(this.data.systemPassword) 
+            login.ClickRememberMe()
+            login.ClickSignIn()
+            login.VarifyError()
+    });
+
+    it('Login test with invalid username and invalid password', function(){
+        login.EnterUserName().type(this.data.invalidUsername) 
+        login.EnterPassword().type(this.data.invalidPassword) 
+        login.ClickRememberMe()
+        login.ClickSignIn()
+        login.ShowingError()
+});
+    
 });
 
 

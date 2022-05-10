@@ -4,7 +4,7 @@
   "reporterOptions": {
     "reportDir": "cypress/report",
     "charts": true,
-    "reportPageTitle": "custom-title"
+    "reportPageTitle": "SilkyDemo_report"
   }
 
 }

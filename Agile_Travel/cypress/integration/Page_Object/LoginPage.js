@@ -22,6 +22,16 @@ export class LoginPage {
         .click()
     }
 
+    VarifyError(){
+        return cy.get('#flash_alert').should('have.text','Invalid email or password')
+        
+    }
+
+    ShowingError(){
+        return cy.get('#flash_alert').should('have.text','Invalid email or passwrd')
+        
+    }
+
 
 
 
