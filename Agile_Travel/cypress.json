@@ -1,10 +1,10 @@
 {
-    "defaultCommandTimeout": 8000,
-    "reporter": "cypress-mochawesome-reporter",
+  "defaultCommandTimeout": 8000,
+  "reporter": "cypress-mochawesome-reporter",
   "reporterOptions": {
     "reportDir": "cypress/report",
     "charts": true,
     "reportPageTitle": "SilkyDemo_report"
-  }
-
+  },
+  "projectId": "561zid"
 }
