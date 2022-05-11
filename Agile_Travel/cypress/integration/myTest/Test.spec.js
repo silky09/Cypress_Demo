@@ -1,9 +1,9 @@
 /// <reference types="cypress" />
 
-import {LoginPage} from '../Page_Object/LoginPage'
-import {SelectFlight} from '../Page_Object/SelectFlight'
-import {PassengerDetails} from '../Page_Object/PassengerDetailPage'
-import {PaymentDetails} from '../Page_Object/Payment_SignoutPage'
+import {LoginPage} from '../../support/Page_Object/LoginPage'
+import {SelectFlight} from '../../support/Page_Object/SelectFlight'
+import {PassengerDetails} from '../../support/Page_Object/PassengerDetailPage'
+import {PaymentDetails} from '../../support/Page_Object/Payment_SignoutPage'
 
 
 describe('Login Test', () => { 
