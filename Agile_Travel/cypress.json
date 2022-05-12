@@ -6,5 +6,8 @@
     "charts": true,
     "reportPageTitle": "SilkyDemo_report"
   },
-  "projectId": "561zid"
+  "projectId": "561zid",
+  "env": {
+    "url": "https://travel.agileway.net/login"
+  }
 }
