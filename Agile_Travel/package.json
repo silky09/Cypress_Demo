@@ -1,13 +1,17 @@
 {
-  "name": "Agile_Travel",
+  "name": "agile_travel",
   "version": "1.0.0",
   "description": "Cypress_demo",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node_modules/.bin/cypress run",
+    "openTestRunner": "node_modules/.bin/cypress open",
+    "headedTest": "npm run test -- --headed",
+    "chromeTest": "npm run test -- --browser chrome"
+
   },
   "keywords": [],
-  "author": "",
+  "author": "Silky",
   "license": "ISC",
   "dependencies": {
     "cypress": "^9.6.1"
