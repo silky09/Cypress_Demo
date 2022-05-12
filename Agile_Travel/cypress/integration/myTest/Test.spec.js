@@ -9,7 +9,8 @@ import {PaymentDetails} from '../../support/Page_Object/Payment_SignoutPage'
 describe('Login Test', () => { 
 
     beforeEach(function(){
-        cy.visit('https://travel.agileway.net/login')
+        //add global variable
+        cy.visit(Cypress.env("url"))
         // use fixture to drive login data
         cy.fixture('example').then(function(data) {
           this.data = data
