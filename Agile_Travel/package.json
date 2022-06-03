@@ -8,15 +8,12 @@
     "openTestRunner": "node_modules/.bin/cypress open",
     "headedTest": "npm run test -- --headed",
     "chromeTest": "npm run test -- --browser chrome"
-
   },
   "keywords": [],
   "author": "Silky",
   "license": "ISC",
-  "dependencies": {
-    "cypress": "^9.6.1"
-  },
   "devDependencies": {
+    "cypress": "^10.0.2",
     "cypress-mochawesome-reporter": "^3.0.1"
   }
 }
